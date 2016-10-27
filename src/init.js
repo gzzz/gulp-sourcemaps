@@ -42,8 +42,6 @@ function init(options) {
     var fileContent = file.contents.toString();
     var sourceMap;
 
-    file.newline = detectNewline.graceful(fileContent || '');
-
     if (options.loadMaps) {
       debug('loadMaps');
       var sourcePath = ''; //root path for the sources in the map
@@ -204,6 +202,8 @@ function init(options) {
     }
 
     sourceMap.file = unixStylePath(file.relative);
+    sourceMap.newline = detectNewline.graceful(fileContent || '');
+
     file.sourceMap = sourceMap;
 
     this.push(file);

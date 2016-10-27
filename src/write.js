@@ -52,6 +52,8 @@ function write(destPath, options) {
     // fix paths if Windows style paths
     sourceMap.file = unixStylePath(file.relative);
 
+    var newline = sourceMap.newline || detectNewline.graceful(file.contents.toString());
+
     if (options.mapSources && typeof options.mapSources === 'function') {
       sourceMap.sources = sourceMap.sources.map(function(filePath) {
         return options.mapSources(filePath);
@@ -94,8 +96,6 @@ function write(destPath, options) {
 
     var extension = file.relative.split('.').pop();
     var commentFormatter;
-    var newline = file.newline || detectNewline.graceful(file.contents.toString());
-    delete file.newline;
 
     switch (extension) {
       case 'css':
